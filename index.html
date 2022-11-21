@@ -12,19 +12,28 @@
     <title>MD-HTML-Tester</title>
 </head>
 <body>
+    <div class="quiz"></div>
     <script>
 
         $.get('js.md').then((data)=>{
-            $('body')[0].innerHTML = DOMPurify.sanitize(marked.parse(data.replaceAll('- [ ]\r\n\r\n', '- [ ] ').replaceAll('- [x]\r\n\r\n', '- [x] '),{gfm:true}))
+            $('.quiz')[0].innerHTML = DOMPurify.sanitize(marked.parse(data.replaceAll('- [ ]\r\n\r\n', '- [ ] ').replaceAll('- [x]\r\n\r\n', '- [x] '),{gfm:true}))
         }).then(()=>{
-            console.log($('body')[0].innerHTML)
-            for( i in $('input')){
+
+            console.log($('.quiz')[0].innerHTML)
+
+            //loop through all of the li elements (answers)
+            //and add onclick for each
+            for( i in $('li')){
+
+                $('li')[i].classList.add('answer')
+
                 console.log('inner loop')
                 if($('input')[i].hasAttribute('disabled')){
                     $('input')[i].removeAttribute('disabled')
                 }
                 $('input')[i].setAttribute('type', 'button')
                 console.log($('input')[i].hasAttribute('checked'))
+                
                 $('input')[i].hasAttribute('checked') ? 
                     $('input')[i].onclick = (e)=>{
                         console.log('clicked')
@@ -34,10 +43,14 @@
                     $('input')[i].onclick = (e)=>{
                         // e.target.setAttribute('background-color','red')
                         $(e.target).toggleClass('wrong')
-
                     }
-
             }
+
+            //loop through all of the questions (h4 elements)
+            //and add class for questions
+            document.querySelectorAll('h4').forEach((q)=>
+                q.classList.add('question')
+            )
         })
 
         

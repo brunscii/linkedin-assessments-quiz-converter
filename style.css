@@ -1,5 +1,24 @@
+
 body{
     background-color: #666;
+    font-size: large;
+    
+}
+
+li > input{
+    width: 4rem;
+}
+
+ul{
+    padding: 0;
+}
+
+.answer{
+    background-color: rgb(63, 122, 173);
+    list-style: none;
+    /* margin-left: -20px; */
+    padding: 0;
+    
 }
 
 .wrong{
@@ -14,3 +33,14 @@ body{
     text-indent: 2rem;
     background: #555;
 }
+
+.question{
+    font-size: 2rem;
+}
+
+.quiz{
+    padding-left: 4rem;
+    display: flex;
+    flex-direction: column;
+}
+
