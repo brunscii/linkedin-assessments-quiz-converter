@@ -1,0 +1,16 @@
+body{
+    background-color: #666;
+}
+
+.wrong{
+    background-color: red !important;
+}
+
+.correct{
+    background-color: green !important;
+}
+
+.wrong-answer, .correct-answer{
+    text-indent: 2rem;
+    background: #555;
+}
