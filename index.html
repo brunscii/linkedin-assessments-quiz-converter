@@ -15,24 +15,39 @@
     <div class="quiz"></div>
     <script>
 
-        $.get('js.md').then((data)=>{
-            $('.quiz')[0].innerHTML = DOMPurify.sanitize(marked.parse(data.replaceAll('- [ ]\r\n\r\n', '- [ ] ').replaceAll('- [x]\r\n\r\n', '- [x] '),{gfm:true}))
-        }).then(()=>{
-
-            console.log($('.quiz')[0].innerHTML)
-
+        $.get('js.md').then((data)=>{ 
+            const quiz = $.parseHTML( DOMPurify.sanitize(marked.parse(data.replaceAll('- [ ]\r\n\r\n', '- [ ] ').replaceAll('- [x]\r\n\r\n', '- [x] '),{gfm:true})));
+            // $('.quiz')[0].innerHTML = quiz 
+            var questionGroups = []
+            // This is a way to add the parsed HTML to the quiz div
+            $.each(quiz, (i, element)=>{
+                console.log(element.nodeName);
+                if(element.nodeName == 'UL'){
+                    questionGroups.push(element);
+                }
+                $('.quiz').append(element);
+            })
+            // console.log(quiz[4].nodeName)
+            var answers = questionGroups.filter( (ul) => (ul.nodeName == 'UL') ? ul : null)
+            var answersCount = 0
+            console.log([...answers])
+            answers.forEach(element => {                
+                element.childNodes.forEach(e => e.nodeName == 'LI' && answersCount++);
+            });
+            console.log(answersCount)
+            
             //loop through all of the li elements (answers)
             //and add onclick for each
-            for( i in $('li')){
-
+            for( i in answersCount.length){
+                console.log(i)
                 $('li')[i].classList.add('answer')
 
-                console.log('inner loop')
+                // console.log('inner loop')
                 if($('input')[i].hasAttribute('disabled')){
                     $('input')[i].removeAttribute('disabled')
                 }
                 $('input')[i].setAttribute('type', 'button')
-                console.log($('input')[i].hasAttribute('checked'))
+                // console.log($('input')[i].hasAttribute('checked'))
                 
                 $('input')[i].hasAttribute('checked') ? 
                     $('input')[i].onclick = (e)=>{
