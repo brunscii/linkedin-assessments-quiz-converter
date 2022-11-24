@@ -47,19 +47,21 @@ with open('js.md','r') as fs:
 
     htmlTest = ''
 
+    temp = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="style.css"><title>Document</title></head><body><div>'
     for i in range(0, len(questions)):
-        temp = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="style.css"><title>Document</title></head><body><div>'
+        if(i*4 + 3 >= len(answers)):
+            continue
         temp += questions[i].replace('#### ', '<label class="question">').replace('?','?</label>')
-        if (i * 4 + 3) > len(answers)-1:
-            break
-        temp += answers[(i*4)].replace('- [x]', '<button class="correct-answer">"') + ('"</button>') if answers[(i*4)].startswith('- [x]') else answers[(i*4)].replace('- [ ]', '<button class="wrong-answer">"') + ('"</button>')
-        temp += answers[(i*4)+1].replace('- [x]', '<button class="correct-answer">"') + ('"</button>') if answers[(i*4)+1].startswith('- [x]') else answers[(i*4)+1].replace('- [ ]', '<button class="wrong-answer">"') + ('"</button>')
-        temp += answers[(i*4)+2].replace('- [x]', '<button class="correct-answer">"') + ('"</button>') if answers[(i*4)+2].startswith('- [x]') else answers[(i*4)+2].replace('- [ ]', '<button class="wrong-answer">"') + ('"</button>')
-        temp += answers[(i*4)+3].replace('- [x]', '<button class="correct-answer">"') + ('"</button>') if answers[(i*4)+3].startswith('- [x]') else answers[(i*4)+3].replace('- [ ]', '<button class="wrong-answer">"') + ('"</button>')
+        # if (i * 4 + 3) > len(answers)-1:
+        #     break
+        temp += answers[i*4].replace('- [x]', '<div class="correct-answer">"') + ('"</div>') if answers[(i*4)].startswith('- [x]') else answers[(i*4)].replace('- [ ]', '<div class="wrong-answer">"') + ('"</div>')
+        temp += answers[i*4+1].replace('- [x]', '<div class="correct-answer">"') + ('"</div>') if answers[(i*4)+1].startswith('- [x]') else answers[(i*4)+1].replace('- [ ]', '<div class="wrong-answer">"') + ('"</div>')
+        temp += answers[i*4+2].replace('- [x]', '<div class="correct-answer">"') + ('"</div>') if answers[(i*4)+2].startswith('- [x]') else answers[(i*4)+2].replace('- [ ]', '<div class="wrong-answer">"') + ('"</div>')
+        temp += answers[i*4+3].replace('- [x]', '<div class="correct-answer">"') + ('"</div>') if answers[(i*4)+3].startswith('- [x]') else answers[(i*4)+3].replace('- [ ]', '<div class="wrong-answer">"') + ('"</div>')
         # temp += answers[(i*4)-2]
         # temp += answers[(i*4)-1]
         # temp += answers[(i*4)]
-        htmlTest += temp + '</div><script type="text/javascript" src="script.js"></script></body></html>'
+    htmlTest = temp + '</div><script type="text/javascript" src="script.js"></script></body></html>'
     print(htmlTest)
     with open('jsTest.html','w') as fw:
         fw.writelines(htmlTest)
